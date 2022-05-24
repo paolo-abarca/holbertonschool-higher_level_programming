@@ -1,0 +1,43 @@
+importing the add_integer function.
+        >>> text_indentation = __import__('5-text_indentation').text_indentation
+
+Tests:
+        >>> text_indentation()
+	Traceback (most recent call last):
+	TypeError: text_indentation() missing 1 required positional argument: 'text'
+
+	>>> text_indentation(None)
+	Traceback (most recent call last):
+	TypeError: text must be a string
+
+	>>> text_indentation("")
+	 
+	>>> text_indentation(int("hola.mundo"))
+	Traceback (most recent call last):
+	ValueError: invalid literal for int() with base 10: 'hola.mundo'
+
+	>>> text_indentation(str(int("hola.mundo")))
+	Traceback (most recent call last):
+	ValueError: invalid literal for int() with base 10: 'hola.mundo'
+
+	>>> text_indentation(str(list("nope.")))
+	['n', 'o', 'p', 'e', '.
+	<BLANKLINE>
+	']
+
+	>>> text_indentation("Hola.?:")
+	Hola.
+        <BLANKLINE>
+        ?
+        <BLANKLINE>
+        :
+        <BLANKLINE>
+
+	>>> text_indentation("Hola.asd?asd:asd")
+        Hola.
+        <BLANKLINE>
+        asd?
+        <BLANKLINE>
+        asd:
+        <BLANKLINE>
+        asd
