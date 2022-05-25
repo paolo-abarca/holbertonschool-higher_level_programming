@@ -26,6 +26,12 @@ def text_indentation(text):
             try:
                 if text[i + 1] == " ":
                     i += 1
+                if text[i + 1] == " ":
+                    i += 1
+                if text[i + 1] == " ":
+                    i += 1
+                if text[i + 1] == " ":
+                    i += 1
             except IndexError:
                 break
 
