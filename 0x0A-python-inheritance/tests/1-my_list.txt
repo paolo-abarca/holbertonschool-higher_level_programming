@@ -29,3 +29,16 @@ Tests:
 	>>> my_list.append(HOLA)
 	Traceback (most recent call last):
 	NameError: name 'HOLA' is not defined
+
+	>>> new_list = MyList()
+
+	>>> new_list.print_sorted()
+	[]
+
+	>>> new_list = MyList("paolo")
+
+	>>> new_list
+	['p', 'a', 'o', 'l', 'o']
+
+	>>> new_list.print_sorted()
+	['a', 'l', 'o', 'o', 'p']
