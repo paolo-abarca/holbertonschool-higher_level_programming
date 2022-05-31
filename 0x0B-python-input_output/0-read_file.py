@@ -9,6 +9,5 @@ def read_file(filename=""):
     """
     method that reads and prints text files
     """
-    with open(filename, encoding="utf-8") as f:
-        read_data = f.read()
-        print("{}".format(read_data))
+    with open(filename, mode="r", encoding="utf-8") as myFile:
+        print(myFile.read(), end="")
