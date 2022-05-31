@@ -1,0 +1,31 @@
+importing the add_integer function:
+        >>> MyList = __import__('1-my_list').MyList
+
+Tests:
+        >>> my_list = MyList()
+
+        >>> my_list
+	[]
+
+	>>> my_list.append(3)
+
+	>>> my_list.append(5)
+
+	>>> my_list.append(1)
+
+	>>> my_list.append(0)
+
+	>>> my_list
+	[3, 5, 1, 0]
+
+	>>> my_list.append(c)
+	Traceback (most recent call last):
+	NameError: name 'c' is not defined
+
+	>>> my_list.append(-)
+	Traceback (most recent call last):
+	SyntaxError: invalid syntax
+
+	>>> my_list.append(HOLA)
+	Traceback (most recent call last):
+	NameError: name 'HOLA' is not defined
