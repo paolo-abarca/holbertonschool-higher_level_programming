@@ -3,18 +3,13 @@ importing the add_integer function:
 
 Tests:
         >>> my_list = MyList()
-
         >>> my_list
 	[]
 
 	>>> my_list.append(3)
-
 	>>> my_list.append(5)
-
 	>>> my_list.append(1)
-
 	>>> my_list.append(0)
-
 	>>> my_list
 	[3, 5, 1, 0]
 
@@ -31,29 +26,29 @@ Tests:
 	NameError: name 'HOLA' is not defined
 
 	>>> new_list = MyList()
-
 	>>> new_list.print_sorted()
 	[]
 
 	>>> new_list = MyList("paolo")
-
 	>>> new_list
 	['p', 'a', 'o', 'l', 'o']
-
 	>>> new_list.print_sorted()
 	['a', 'l', 'o', 'o', 'p']
 
 	>>> my_list = MyList()
-
         >>> my_list.append(-1)
-
         >>> my_list.append(-4)
-
         >>> my_list.append(-2)
-
         >>> my_list.append(-3)
-
         >>> my_list.append(-5)
-
         >>> my_list.print_sorted()
         [-5, -4, -3, -2, -1]
+
+	>>> my_list = MyList()
+        >>> my_list.append(1.5)
+        >>> my_list.append(-4)
+        >>> my_list.append(4)
+        >>> my_list.append(-3)
+        >>> my_list.append(1)
+        >>> my_list.print_sorted()
+        [-4, -3, 1, 1.5, 4]
