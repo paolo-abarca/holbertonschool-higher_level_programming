@@ -1,128 +1,119 @@
 #!/usr/bin/python3
 """
-Unittest Class Base
+Unit tests for Base class
 """
 import unittest
 from models.base import Base
+from models.base import __doc__ as module_doc
 from models.rectangle import Rectangle
 from models.square import Square
-import os
 import json
 
 
 class TestBase(unittest.TestCase):
     """
-    the test Base
+    The class testbase
+    functionality
     """
-    def task1(self):
+    def test_docstrings(self):
         """
-        method test for task1
+        Test for docstrings
         """
-        b1 = Base()
-        self.assertEqual(b1.id, 1)
+        self.assertIsNotNone(module_doc)
+        self.assertIsNotNone(Base.__doc__)
+        self.assertIs(hasattr(Base, "__init__"), True)
+        self.assertIsNotNone(Base.__init__.__doc__)
+        self.assertIs(hasattr(Base, "create"), True)
+        self.assertIsNotNone(Base.create.__doc__)
+        self.assertIs(hasattr(Base, "to_json_string"), True)
+        self.assertIsNotNone(Base.to_json_string.__doc__)
+        self.assertIs(hasattr(Base, "from_json_string"), True)
+        self.assertIsNotNone(Base.from_json_string.__doc__)
+        self.assertIs(hasattr(Base, "save_to_file"), True)
+        self.assertIsNotNone(Base.save_to_file.__doc__)
+        self.assertIs(hasattr(Base, "load_from_file"), True)
+        self.assertIsNotNone(Base.load_from_file.__doc__)
 
-        b2 = Base()
-        self.assertEqual(b2.id, 2)
-
-        b3 = Base()
-        self.assertEqual(b3.id, 3)
-
-        b4 = Base(12)
-        self.assertEqual(b4.id, 12)
-
-        b5 = Base()
-        self.assertEqual(b5.id, 4)
-
-    def task15(self):
+    def test_id(self):
         """
-        method test for task15
+        Test for id property
         """
-        r1 = Rectangle(10, 7, 2, 8)
-        dictionary = r1.to_dictionary()
-        json_dictionary = Base.to_json_string([dictionary])
-        self.assertNotEqual(json_dictionary, '[{"width": 10, "height": 7,\
-        "x": 2, "y": 8, "id": 3}]')
+        self.b1 = Base()
+        self.assertEqual(self.b1.id, 1)
 
-    def task16(self):
+        self.b2 = Base()
+        self.assertEqual(self.b2.id, 2)
+
+        self.b3 = Base()
+        self.assertEqual(self.b3.id, 3)
+
+        self.b4 = Base(12)
+        self.assertEqual(self.b4.id, 12)
+
+        self.b5 = Base()
+        self.assertEqual(self.b5.id, 4)
+
+    def test_to_from_json_string(self):
         """
-        method test for task16
+        Test for to_from_json_string
         """
-        r1 = Rectangle(10, 7, 2, 8)
-        r2 = Rectangle(2, 4)
-        Rectangle.save_to_file([r1, r2])
+        self.assertEqual(Base.to_json_string(None), "[]")
+        self.assertEqual(Base.to_json_string([]), "[]")
+        r1 = Rectangle(10, 7, 2, 8, 1)
+        r1_dict = r1.to_dictionary()
+        json_dict = Base.to_json_string([r1_dict])
+        self.assertEqual(r1_dict, {'x': 2,
+                                   'width': 10,
+                                   'id': 1,
+                                   'height': 7,
+                                   'y': 8})
+        self.assertIs(type(r1_dict), dict)
+        self.assertIs(type(json_dict), str)
+        self.assertEqual(json.loads(json_dict), json.loads('[{"x": 2, '
+                                                           '"width": 10, '
+                                                           '"id": 1, '
+                                                           '"height": 7, '
+                                                           '"y": 8}]'))
+        list_input = [
+            {'id': 89, 'width': 10, 'height': 4},
+            {'id': 7, 'width': 1, 'height': 7}
+        ]
+        json_list_input = Rectangle.to_json_string(list_input)
+        list_output = Rectangle.from_json_string(json_list_input)
+        self.assertIs(type(json_list_input), str)
+        self.assertIs(type(list_output), list)
+        self.assertEqual(list_output, list_input)
+        self.assertEqual(json.loads(json_list_input),
+                         json.loads('[{"height": 4, '
+                                    '"width": 10, '
+                                    '"id": 89}, '
+                                    '{"height": 7, '
+                                    '"width": 1, '
+                                    '"id": 7}]'))
 
-        s1 = Square(6, 5, 3)
-        s2 = Square(9)
-        Rectangle.save_to_file([r1, r2])
-        self.assertTrue(os.path.isfile('Rectangle.json'))
-        self.assertTrue(os.path.isfile('Square.json'))
-
-        contenido3 = []
-        Base.save_to_file(None)
-        with open("Base.json", encoding="utf-8") as Myfile2:
-            contenido3 = Myfile2.read()
-        contenido3_dict = json.loads(contenido3)
-        j3_string = []
-        self.assertEqual(contenido3_dict, j3_string)
-
-        contenido4 = []
-        Base.save_to_file("")
-        with open("Base.json", encoding="utf-8") as Myfile3:
-            contenido4 = Myfile3.read()
-        contenido4_dict = json.loads(contenido4)
-        j4_string = []
-        self.assertEqual(contenido4_dict, j4_string)
-
-    def task17(self):
+    def test_save_to_file(self):
         """
-        method test for task17
+        Test for save_to_file
+        """
+        r0 = Rectangle(10, 7, 2, 8)
+        r1 = Rectangle(2, 4)
+        Rectangle.save_to_file([r0, r1])
+        res = ('[{"y": 8, "x": 2, "id": 1, "width": 10, "height": 7},' +
+               ' {"y": 0, "x": 0, "id": 2, "width": 2, "height": 4}]')
+        with open("Rectangle.json", "r") as f:
+            self.assertEqual(len(f.read()), len(res))
+
+    def test_from_json_string(self):
+        """
+        Test for from_json_string
         """
         list_input = [
             {'id': 89, 'width': 10, 'height': 4},
             {'id': 7, 'width': 1, 'height': 7}
         ]
-        json_list_input = json.dumps(list_input)
-        list_output = json.loads(json_list_input)
-        self.assertEqual(list_output, list_input)
+        json_list_input = Rectangle.to_json_string(list_input)
+        list_output = Rectangle.from_json_string(json_list_input)
+        res = [{'width': 10, 'height': 4, 'id': 89},
+               {'width': 1, 'height': 7, 'id': 7}]
+        self.assertCountEqual(list_output, res)
         self.assertEqual(type(list_output), list)
-        self.assertEqual(type(list_output[0]), dict)
-        self.assertEqual(type(json_list_input), str)
-
-        list1 = []
-        self.assertEqual(list1, Base.from_json_string(None))
-
-    def task18(self):
-        """
-        method test for task18
-        """
-        x1d = {'id': 1, 'width': 1, 'height': 1, 'x': 1, 'y': 1}
-        xr2 = Rectangle.create(**x1d)
-        self.assertDictEqual(x1d, xr2.to_dictionary())
-
-        s1d = {'id': 1, 'size': 1, 'x': 1, 'y': 1}
-        sr2 = Square.create(**s1d)
-        self.assertDictEqual(s1d, sr2.to_dictionary())
-
-    def task19(self):
-        """
-        method test for task19
-        """
-        r1 = Rectangle(10, 7, 2, 8)
-        r2 = Rectangle(2, 4)
-        listentry = [r1, r2]
-        Rectangle.save_to_file(listentry)
-        list_out = Rectangle.load_from_file()
-        self.assertNotEqual(id(listentry[0]), id(list_out[0]))
-        self.assertEqual(str(listentry[1]), '[Rectangle] (4) 0/0 - 2/4')
-
-        s100 = Square(5)
-        s200 = Square(7, 9, 1)
-        listentry2 = [s100, s200]
-        Square.save_to_file(listentry2)
-        list_out = Square.load_from_file()
-        self.assertNotEqual(id(listentry2[0]), id(list_out[0]))
-        self.assertEqual(str(listentry2[0]), '[Square] (7) 0/0 - 5')
-        self.assertEqual(str(listentry2[1]), '[Square] (8) 9/1 - 7')
-
-    if __name__ == "__main__":
-        unittest.main()
