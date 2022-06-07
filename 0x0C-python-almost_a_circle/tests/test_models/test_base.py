@@ -34,24 +34,20 @@ class TestBase(unittest.TestCase):
         self.assertIs(hasattr(Base, "load_from_file"), True)
         self.assertIsNotNone(Base.load_from_file.__doc__)
 
-    def test_id(self):
+    def test_base(self):
         """
         Test for id property
         """
         self.b1 = Base()
         self.assertEqual(self.b1.id, 1)
-
         self.b2 = Base()
         self.assertEqual(self.b2.id, 2)
-
-        self.b3 = Base()
-        self.assertEqual(self.b3.id, 3)
-
-        self.b4 = Base(12)
-        self.assertEqual(self.b4.id, 12)
-
+        self.b3 = Base(30)
+        self.assertEqual(self.b3.id, 30)
+        self.b4 = Base(25)
+        self.assertEqual(self.b4.id, 25)
         self.b5 = Base()
-        self.assertEqual(self.b5.id, 4)
+        self.assertEqual(self.b5.id, 3)
 
     def test_to_from_json_string(self):
         """
@@ -117,3 +113,34 @@ class TestBase(unittest.TestCase):
                {'width': 1, 'height': 7, 'id': 7}]
         self.assertCountEqual(list_output, res)
         self.assertEqual(type(list_output), list)
+
+        list_output_1 = Rectangle.from_json_string('')
+        self.assertEqual(list_output_1, [])
+
+        list_output_2 = Rectangle.from_json_string(None)
+        self.assertEqual(list_output_2, [])
+
+    def test_create(self):
+        """
+        Test for create
+        """
+        r1 = Rectangle(3, 5, 1, 2, 10)
+        r1_dictionary = r1.to_dictionary()
+        r2 = Rectangle.create(**r1_dictionary)
+        self.assertEqual(str(r1), "[Rectangle] (10) 1/2 - 3/5")
+        self.assertEqual(str(r2), "[Rectangle] (10) 1/2 - 3/5")
+        self.assertIsNot(r1, r2)
+
+    def test_load_from_file(self):
+        """
+        Test for load_from_file
+        """
+        r1 = Rectangle(10, 7, 2, 8, 1)
+        r2 = Rectangle(2, 4, 5, 6, 2)
+        Rectangle.save_to_file([r1, r2])
+        list_rectangles_output = Rectangle.load_from_file()
+        self.assertEqual(str(r1), str(list_rectangles_output[0]))
+
+
+if __name__ == "__main__":
+    unittest.main()
