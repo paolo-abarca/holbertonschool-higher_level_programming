@@ -20,13 +20,12 @@ if __name__ == '__main__':
             states.name=%s ORDER BY cities.id;", (argv[4],))
 
     rows = cursor.fetchall()
-    i = len(rows)
+
+    value = []
     for row in rows:
-        if i > 1:
-            print("{}, ".format(row[0]), end="")
-        else:
-            print(row[0])
-        i = i - 1
+        value.append(row[0])
+
+    print(", ".join(value))
 
     cursor.close()
     db.close()
