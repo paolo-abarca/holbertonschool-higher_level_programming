@@ -27,3 +27,6 @@ if __name__ == '__main__':
         else:
             print(row[0])
         i = i - 1
+
+    cursor.close()
+    db.close()
