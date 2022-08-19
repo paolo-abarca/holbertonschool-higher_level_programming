@@ -2,12 +2,14 @@
 """
 Python script that fetches https://intranet.hbtn.io/status
 """
-import urllib.request
 
-with urllib.request.urlopen('https://intranet.hbtn.io/status') as response:
-    readpage = response.read()
+if __name__ == "__main__":
+    import urllib.request
 
-content = str(readpage).split("\'")
+    with urllib.request.urlopen('https://intranet.hbtn.io/status') as response:
+        readpage = response.read()
 
-print("Body response:\n\t- type: {}\n\t- content: {}\n\t- utf8 content: {}"
-      .format(type(readpage), readpage, content[1]))
+    content = str(readpage).split("\'")
+
+    print("Body response:\n\t- type: {}\n\t- content: {}\n\t- utf8 content: {}"
+          .format(type(readpage), readpage, content[1]))
