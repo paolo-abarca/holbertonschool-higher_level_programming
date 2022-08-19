@@ -10,7 +10,7 @@ if __name__ == "__main__":
     import urllib.request
     from sys import argv
 
-    with urllib.request.urlopen('https://intranet.hbtn.io') as response:
+    with urllib.request.urlopen(argv[1]) as response:
         value = response.headers["X-Request-Id"]
 
     print(value)
