@@ -16,4 +16,5 @@ if __name__ == "__main__":
     else:
         for i in range(10):
             print("{}: {}".format(r.json()[i].get('sha'),
-                                  r.json()[i].get('author name')))
+                                  r.json()[i].get('commit').get('author')
+                                  .get('name')))
