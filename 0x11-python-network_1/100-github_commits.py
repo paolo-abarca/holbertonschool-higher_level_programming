@@ -14,7 +14,8 @@ if __name__ == "__main__":
         print("None")
 
     else:
+        fjson = r.json()
         for i in range(10):
-            print("{}: {}".format(r.json()[i].get('sha'),
-                                  r.json()[i].get('commit').get('author')
+            print("{}: {}".format(fjson[i].get('sha'),
+                                  fjson[i].get('commit').get('author')
                                   .get('name')))
