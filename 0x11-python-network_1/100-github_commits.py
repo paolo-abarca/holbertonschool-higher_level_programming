@@ -7,12 +7,12 @@ if __name__ == "__main__":
     import requests
     from sys import argv
 
-    r = requests.get("https://api.github.com/repos/{}/{}/commits"
-                     .format(argv[1], argv[2]))
+    url = "https://api.github.com/repos/{}/{}/commits".format(argv[1], argv[2])
 
-    fjson = r.json()
+    r = requests.get(url)
 
     try:
+        fjson = r.json()
         for i in range(10):
             print("{}: {}".format(fjson[i].get('sha'),
                                   fjson[i].get('commit').get('author')
