@@ -13,4 +13,7 @@ axios.get(process.argv[2] + '?completed=true').then(
       }
     });
     console.log(dict);
+  })
+  .catch((error) => {
+    console.log(error);
   });
